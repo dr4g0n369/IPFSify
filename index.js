@@ -1,52 +1,61 @@
-const ipfsClient = require('ipfs-http-client')
-const express = require('express')
-const bodyParser = require('body-parser')
-const fileUpload = require('express-fileupload')
-const fs = require('fs')
+import { create as ipfsHttpClient } from 'ipfs-http-client';
+import express from 'express';
+import bodyParser from 'body-parser';
+import busboy from 'connect-busboy'; // Use busboy for file uploads
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const ipfs = new ipfsClient({host: 'localhost', port: '5001', protocol: 'http'})
-const app = express()
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.set('view engine', 'ejs')
-app.use(bodyParser.urlencoded({extended: true}))
+const ipfs = ipfsHttpClient({host: 'localhost', port: '5001', protocol: 'http'});
+const app = express();
+
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(busboy()); 
 
 app.get('/', (req, res) => {
     res.render('home');
-})
+});
 
 app.post('/upload', (req, res) => {
-    const file = req.files.file
-    const fileName = req.body.fileName
-    const filePath = 'files/' + fileName
-
-    file.mv(filePath, async(err) => {
-        if (err) {
-            console.log('Error: failed to download the file')
-            return res.status(500).send(err)
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        // Debugging to ensure filename is a string
+        console.log("Uploading file:", filename.filename);
+        if (typeof filename.filename !== 'string') {
+            // console.error("Filename is not a string:", filename);
+            return res.status(400).send("Invalid filename");
         }
 
-        const fileHash =  await addFile(fileName, filePath)
+        const filePath = path.join(__dirname, 'files', filename.filename);
+        console.log("FilePath: ",filePath)
+        const fstream = fs.createWriteStream(filePath);
 
-        fs.unlink(filePath, (err) => {
-            if (err) console.log(err)
-        })
-
-        res.render('upload', {fileName, fileHash})
-
-    })
-
-})
+        file.pipe(fstream);
+        fstream.on('close', async function () {
+            try {
+                const fileHash = await addFile(filename, filePath);
+                await fs.promises.unlink(filePath); 
+                console.log("Here", filePath);
+                res.render('upload', { filename, fileHash });    
+            }catch (error) {
+                console.error("Error uploading file:", error);
+                res.status(500).send("Error uploading file");
+            }
+        });
+    });
+});
 
 const addFile = async (fileName, filePath) => {
-    const file = fs.readFileSync(filePath)
-    const fileAdded = await ipfs.add({path: fileName, content: file})
-
-    const fileHash = fileAdded[0].hash
-    
-    return fileHash
-}
-
+    const file = fs.readFileSync(filePath);
+    const fileAdded = await ipfs.add({path: fileName, content: file});
+    const fileHash = fileAdded.cid.toString();  // Adjusted to return CID as string
+    return fileHash;
+};
 
 app.listen(3000, () => {
-    console.log("Server is listening on port 3000")
-})
+    console.log("Server is listening on port 3000");
+});
