@@ -65,6 +65,13 @@ function Navbar() {
       icon: <CiHeart className="h-6 w-6" />,
       action: () => handleProtectedNavigation("/liked-songs"),
     },
+    {
+      label: "Upload New Song",
+      classes: navItemClasses,
+      icon: <CiHeart className="h-6 w-6" />,
+      action: () => handleProtectedNavigation("/upload-song"),
+    },
+
   ];
 
   return (
