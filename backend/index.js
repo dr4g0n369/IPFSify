@@ -21,8 +21,25 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
-app.post('/upload', (req, res) => {
-    console.log("Uploading file");
+app.get('/getSong/:hash', async (req, res) => {
+    const hash = req.params.hash;
+  
+    try {
+      const response = await fetch('http://ipfs.io/ipfs/' + hash);
+  
+      if (!response.ok) {
+        return res.status(response.status).json({ error: 'Failed to fetch song from IPFS' });
+      }
+  
+      res.setHeader('Content-Type', 'audio/mpeg');
+  
+      response.body.pipe(res);
+    } catch (error) {
+      res.status(500).json({ error: 'An error occurred while fetching the song', details: error.message });
+    }
+  });
+  
+app.post('/uploadSong', (req, res) => {
     req.pipe(req.busboy);
     req.busboy.on('file', function (fieldname, file, filename) {
         console.log("Uploading file:", filename.filename);
@@ -31,7 +48,6 @@ app.post('/upload', (req, res) => {
         }
 
         const filePath = path.join(__dirname, 'files', filename.filename);
-        console.log("FilePath: ",filePath)
         const fstream = fs.createWriteStream(filePath);
 
         file.pipe(fstream);
@@ -39,7 +55,6 @@ app.post('/upload', (req, res) => {
             try {
                 const fileHash = await addFile(filename, filePath);
                 await fs.promises.unlink(filePath); 
-                console.log("Here", filePath);
                 res.render('upload', { filename, fileHash });    
             }catch (error) {
                 console.error("Error uploading file:", error);
