@@ -1,7 +1,7 @@
 import { create as ipfsHttpClient } from 'ipfs-http-client';
 import express from 'express';
 import bodyParser from 'body-parser';
-import busboy from 'connect-busboy'; // Use busboy for file uploads
+import busboy from 'connect-busboy'; 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -23,10 +23,8 @@ app.get('/', (req, res) => {
 app.post('/upload', (req, res) => {
     req.pipe(req.busboy);
     req.busboy.on('file', function (fieldname, file, filename) {
-        // Debugging to ensure filename is a string
         console.log("Uploading file:", filename.filename);
         if (typeof filename.filename !== 'string') {
-            // console.error("Filename is not a string:", filename);
             return res.status(400).send("Invalid filename");
         }
 
@@ -52,7 +50,7 @@ app.post('/upload', (req, res) => {
 const addFile = async (fileName, filePath) => {
     const file = fs.readFileSync(filePath);
     const fileAdded = await ipfs.add({path: fileName, content: file});
-    const fileHash = fileAdded.cid.toString();  // Adjusted to return CID as string
+    const fileHash = fileAdded.cid.toString();  
     return fileHash;
 };
 
