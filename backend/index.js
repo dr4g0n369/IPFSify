@@ -1,5 +1,6 @@
 import { create as ipfsHttpClient } from 'ipfs-http-client';
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import busboy from 'connect-busboy'; 
 import fs from 'fs';
@@ -15,12 +16,13 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(busboy()); 
-
+app.use(cors());
 app.get('/', (req, res) => {
     res.render('home');
 });
 
 app.post('/upload', (req, res) => {
+    console.log("Uploading file");
     req.pipe(req.busboy);
     req.busboy.on('file', function (fieldname, file, filename) {
         console.log("Uploading file:", filename.filename);
