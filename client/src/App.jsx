@@ -15,6 +15,7 @@ import DrawerComp from "./components/DrawerComp";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Search from "./components/Search";
+import UploadSong from "./components/UploadSong";
 
 function App() {
   const contentWrapperRef = useRef();
@@ -29,6 +30,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/upload-song" element={<UploadSong/>} />
+                
               </Routes>
             </div>
           </Box>
