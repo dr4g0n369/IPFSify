@@ -6,7 +6,7 @@ import { SimpleGrid } from "@chakra-ui/react";
 const playlists = [
   {
     classes: "",
-    title: "Playlist title 1",
+    title: "sample-6s",
     description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/7f1d1d/fff?text=Cover&font=lobster",
   },
