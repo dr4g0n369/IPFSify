@@ -1,9 +1,23 @@
-# IPFSify
+<a name="readme-top"></a>
 
-*Stream Your Tunes, Own the Experience: Decentralized Music Streaming Powered by IPFS & Web3.*
-## Overview
+<h2 align="center">IPFSify</h2>
+  
+ <h4 align="center"> Stream Your Tunes, Own the Experience: Decentralized Music Streaming Powered by IPFS & Web3.</h4> <br>
+<p align="center">
+<b>IPFSify</b> is a cutting-edge decentralized audio streaming platform that leverages the power of IPFS (InterPlanetary File System) and Web3 technology. The backend is built with<b> Express.js</b> , while the frontend is crafted with React.js. Users can stream, upload, and like songs on the IPFS network, ensuring a seamless and decentralized music experience.
+    <br />
+    <a href="https://github.com/ZeroKnowledgeClub/IPFSify"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/ZeroKnowledgeClub/IPFSify">View Demo</a>
+    ·
+    <a href="https://github.com/ZeroKnowledgeClub/IPFSify/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    ·
+    <a href="https://github.com/ZeroKnowledgeClub/IPFSify/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+  </p>
+</div>
 
-**IPFSify** is a cutting-edge decentralized audio streaming platform that leverages the power of IPFS (InterPlanetary File System) and Web3 technology. The backend is built with **Express.js**, while the frontend is crafted with **React.js**. Users can stream, upload, and like songs on the IPFS network, ensuring a seamless and decentralized music experience.
+
 
 ## Features
 
