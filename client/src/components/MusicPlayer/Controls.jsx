@@ -3,7 +3,6 @@ import { MdSkipNext, MdSkipPrevious } from 'react-icons/md';
 import { BsArrowRepeat, BsFillPauseFill, BsFillPlayFill, BsShuffle } from 'react-icons/bs';
 
 const Controls = ({ isActive, isPlaying, repeat, setRepeat, shuffle, setShuffle, handlePlayPause }) => {
-    console.log({ isActive });
 
     return (
         <div className="flex items-center justify-around md:w-36 lg:w-52 2xl:w-80">

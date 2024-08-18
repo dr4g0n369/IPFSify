@@ -9,6 +9,10 @@ export const AudioProvider = ({ children }) => {
     const [activeSong, setActiveSong] = useState({
         uri_name: "",
         title: "",
+        CIDhash: "",
+        Likes: 0,
+        fetched: false,
+        duration: 0
     })
     const [isActive, setIsActive] = useState(false);
     const audioRef = useRef(null);
@@ -30,7 +34,7 @@ export const AudioProvider = ({ children }) => {
     };
 
     return (
-        <AudioContext.Provider value={{ isPlaying, play, pause, volume,setVolume, audioRef, activeSong, setActiveSong, isActive, setIsActive }}>
+        <AudioContext.Provider value={{ isPlaying, play, pause, volume, setVolume, audioRef, activeSong, setActiveSong, isActive, setIsActive }}>
             {children}
             {/* Hidden audio element */}
         </AudioContext.Provider>
