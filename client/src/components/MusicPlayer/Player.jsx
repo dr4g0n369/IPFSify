@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useEffect } from 'react';
 
-const Player = ({ activeSong, isPlaying, volume, seekTime, repeat }) => {
+const Player = ({ activeSong, isPlaying, volume, seekTime, repeat, setDuration }) => {
     const ref = useRef(null);
     useEffect(() => {
         if (ref.current) {
@@ -11,6 +11,7 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, repeat }) => {
             } else {
                 ref.current.pause();
             }
+            setDuration(ref.current.duration);
         }
     }, [isPlaying])
 

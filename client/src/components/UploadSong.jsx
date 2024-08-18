@@ -9,10 +9,7 @@ function UploadSong() {
   const { contract,account } = useWeb3();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const [fileName, setFileName] = useState("");
-  
-
-
-  
+ 
   // console.log("Contract:", contract)
   const handleFileUpload = async() => {
     if (!fileName || acceptedFiles.length === 0) {

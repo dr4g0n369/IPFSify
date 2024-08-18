@@ -3,9 +3,9 @@ import Playlist from "./PlaylistCard";
 import { SimpleGrid } from "@chakra-ui/react";
 import { useWeb3 } from "../contexts/web3context";
 
-const initialPlaylists = [];
 
 const Main = () => {
+  const initialPlaylists = [];
   const { contract, account } = useWeb3();
   const [playlists, setPlaylists] = useState(initialPlaylists);
   const [fetched, setFetched] = useState(false); // Track if data has been fetched
@@ -21,7 +21,7 @@ const Main = () => {
             title: song.SongName,
             CIDhash: song.CIDHash,
             coverUrl: "https://media.istockphoto.com/id/1199639244/vector/music-notes-neon-icon.jpg?s=612x612&w=0&k=20&c=2PR9RDBk6QrEsaHtNgQ9_CK2W9WM8GScp649NcI2o_c=",
-            Likes: song.Likes
+            Likes: song.Likes ? song.Likes : 0,
           }));
           setPlaylists(newSongs); // Set playlists directly
           setFetched(true); // Mark as fetched
@@ -57,7 +57,7 @@ const Main = () => {
             templateColumns="repeat(auto-fill, minmax(175px, 1fr))"
           >
             {playlists.map((playlist, index) => (
-              <Playlist key={playlist.title + index} {...playlist} />
+              <Playlist key={playlist.title + index} CIDhash={playlist.CIDhash} Likes={playlist.Likes} coverUrl={playlist.coverUrl} title={playlist.title} />
             ))}
           </SimpleGrid>
         </div>

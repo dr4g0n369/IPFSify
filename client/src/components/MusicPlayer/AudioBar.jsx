@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, act } from 'react';
 
 // import { nextSong, prevSong, playPause } from '../../redux/features/playerSlice';
 import Controls from './Controls.jsx';
@@ -7,6 +7,7 @@ import Track from './Track';
 import VolumeBar from './VolumeBar.jsx';
 import { useAudio } from '../../contexts/audioPlayer';
 import Seekbar from './SeekBar.jsx';
+import axios from 'axios';
 const AudioBar = () => {
     const { isPlaying, play, pause, changeVolume, setVolume, volume, activeSong, setActiveSong, isActive } = useAudio()
     const [duration, setDuration] = useState(3);
@@ -15,9 +16,29 @@ const AudioBar = () => {
     //   const [volume, setVolume] = useState(0.3);
     const [repeat, setRepeat] = useState(false);
     const [shuffle, setShuffle] = useState(false);
-    // useEffect(() => {
-    //     setActiveSong({ uri_name: "/src/assets/audioFiles/sample-6s.mp3", title: "sample-6s" })
-    // }, [])
+    const getSong = async (CIDhash) => {
+        if (activeSong.fetched) return;
+        console.log("Getting song from server");
+        const response = await axios.get(`http://localhost:3000/getSong/${CIDhash}`, { responseType: 'blob' });
+
+        const fileUrl = URL.createObjectURL(response.data);
+        const audio = new Audio(fileUrl.split('blob:')[1])
+        audio.onloadedmetadata = () => {
+            console.log("Duration", audio.duration);
+            setDuration(audio.duration);
+        } 
+        console.log(audio, fileUrl.toString().split('blob:')[1]);
+
+
+        setActiveSong({ ...activeSong, uri_name: fileUrl, fetched: true, duration: duration });
+
+    }
+    useEffect(() => {
+        console.log("Active song changed", activeSong);
+        // write a fucntion to get the song from the server at /getSong/:CIDhash
+        getSong(activeSong.CIDhash);
+
+    }, [activeSong])
     const handlePlayPause = () => {
         console.log("Play pause");
 
@@ -59,6 +80,8 @@ const AudioBar = () => {
                     isPlaying={isPlaying}
                     seekTime={seekTime}
                     repeat={repeat}
+                    setDuration={setDuration}
+                    isActive={isActive}
                 //   currentIndex={currentIndex}
                 //   onEnded={handleNextSong}
                 //   onTimeUpdate={(event) => setAppTime(event.target.currentTime)}

@@ -12,17 +12,20 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAudio } from "../contexts/audioPlayer";
 
 
-function PlaylistCard({ coverUrl, title, likes }) {
+function PlaylistCard({ coverUrl, title, Likes,CIDhash }) {
+
   const navigate = useNavigate();
   const { setActiveSong, setIsActive } = useAudio();
   const handleOnClickSong = () => {
-    setActiveSong({ uri_name: `/src/assets/audioFiles/${title}.mp3`, title: title })
+    console.log({coverUrl, title, Likes, CIDhash});
+
+    setActiveSong({ uri_name: `/src/assets/audioFiles/${title}.mp3`, title: title ,CIDhash:CIDhash,Likes:Likes});
     setIsActive(true);
-    // navigate(`/playlist/${title}`);
+
   }
 
   return (
