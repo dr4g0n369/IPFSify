@@ -1,7 +1,6 @@
 # IPFSify
 
-A Decentralized Audio Streaming Platform
-
+*Stream Your Tunes, Own the Experience: Decentralized Music Streaming Powered by IPFS & Web3.*
 ## Overview
 
 **IPFSify** is a cutting-edge decentralized audio streaming platform that leverages the power of IPFS (InterPlanetary File System) and Web3 technology. The backend is built with **Express.js**, while the frontend is crafted with **React.js**. Users can stream, upload, and like songs on the IPFS network, ensuring a seamless and decentralized music experience.
