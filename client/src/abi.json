@@ -1,0 +1,147 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "hash",
+				"type": "string"
+			}
+		],
+		"name": "addSong",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"name": "likeSong",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "GetSong",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "SongName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "CIDHash",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "likes",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"name": "getSongByName",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "SongName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "CIDHash",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "likes",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Songs.Song",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getSongs",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "SongName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "CIDHash",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "likes",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Songs.Song[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "hello",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	}
+]

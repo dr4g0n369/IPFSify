@@ -14,8 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate, useNavigation } from "react-router-dom";
 
-function PlaylistCard({ classes, coverUrl, title, description }) {
+function PlaylistCard({ coverUrl, title, likes }) {
   const navigate = useNavigate();
+  // console.log(title , " has ", likes , " likes!")
   return (
     <Card
       maxW="sm"

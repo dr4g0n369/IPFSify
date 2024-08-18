@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   const { provider, initializeProvider, account } = useWeb3();
-  console.log(provider, account);
+  // console.log(provider, account);
   const navigate = useNavigate();
   return (
     <header className="bg-[#070707] flex-1 flex justify-between items-center py-[10px] px-[13px] sm:px-[32px] sticky top-0 z-10">
