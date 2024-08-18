@@ -70,7 +70,7 @@ const AudioBar = () => {
                     value={appTime}
                     min="0"
                     max={duration}
-                    onInput={(event) => setSeekTime(event.target.value)}
+                    onChange={(event) => {setSeekTime(event.target.value)}}
                     setSeekTime={setSeekTime}
                     appTime={appTime}
                 />
@@ -82,6 +82,7 @@ const AudioBar = () => {
                     repeat={repeat}
                     setDuration={setDuration}
                     isActive={isActive}
+                    onTimeUpdate={(event) => setAppTime(event.target.currentTime)}
                 //   currentIndex={currentIndex}
                 //   onEnded={handleNextSong}
                 //   onTimeUpdate={(event) => setAppTime(event.target.currentTime)}
