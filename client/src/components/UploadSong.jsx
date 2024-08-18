@@ -2,28 +2,54 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
+import { useWeb3 } from "../contexts/web3context";
 
 function UploadSong() {
+
+  const { contract,account } = useWeb3();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const [fileName, setFileName] = useState("");
+  
 
-  const handleFileUpload = () => {
+
+  
+  // console.log("Contract:", contract)
+  const handleFileUpload = async() => {
     if (!fileName || acceptedFiles.length === 0) {
       alert("Please enter a filename and select a file.");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("fileName", fileName);
-    formData.append("file", acceptedFiles[0]);
+    if (contract && account) {
+      try {
 
-    axios.post("http://localhost:3000/uploadSong", formData)
-      .then((response) => {
-        console.log("Success:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+
+        const formData = new FormData();
+        formData.append("fileName", fileName);
+        formData.append("file", acceptedFiles[0]);
+        let hash;
+        await axios.post("http://localhost:3000/uploadSong", formData)
+          .then((response) => {
+            console.log("Success:", response.data);
+            hash=response.data.hash
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        
+        const result = await contract.methods.addSong(fileName,hash).send({ from: account });
+        console.log("Contract method result:", result);
+        console.log("Transaction hash:", result.transactionHash);
+        console.log("Gas used:", result.gasUsed);
+      } catch (contractError) {
+        console.error("Error interacting with contract:", contractError);
+      }
+    } else {
+      console.error("Contract or account is not initialized.");
+    }
+
+   
   };
 
   const files = acceptedFiles.map((file) => (
