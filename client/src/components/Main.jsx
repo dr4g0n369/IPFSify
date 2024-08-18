@@ -6,9 +6,8 @@ import { useWeb3 } from "../contexts/web3context";
 
 const Main = () => {
   const initialPlaylists = [];
-  const { contract, account } = useWeb3();
+  const { contract, account,fetched, setFetched } = useWeb3();
   const [playlists, setPlaylists] = useState(initialPlaylists);
-  const [fetched, setFetched] = useState(false); // Track if data has been fetched
 
 
   useEffect(() => {
