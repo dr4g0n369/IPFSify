@@ -10,6 +10,7 @@ const Main = () => {
   const [playlists, setPlaylists] = useState(initialPlaylists);
   const [fetched, setFetched] = useState(false); // Track if data has been fetched
 
+
   useEffect(() => {
     const getSongs = async () => {
       if (contract && account && !fetched) {
@@ -30,7 +31,6 @@ const Main = () => {
         }
       }
     };
-
     getSongs();
   }, [contract, account, fetched]); // Include fetched to control data fetching
 

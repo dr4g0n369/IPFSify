@@ -59,9 +59,16 @@ function UploadSong() {
   ));
 
   return (
-    <section className="container m-20 flex flex-col justify-center align-center">
+    <section className="container m-20 w-4/5 flex flex-col justify-center align-center">
       <Text fontSize={"xx-large"}>Upload File</Text>
-
+      <Input
+          type="text"
+          name="fileName"
+          placeholder="Filename..."
+          value={fileName}
+          onChange={(e) => setFileName(e.target.value)}
+          mb={4}
+        />
       <form
         {...getRootProps({
           className: "dropzone",
@@ -85,14 +92,7 @@ function UploadSong() {
           handleFileUpload();
         }}
       >
-        <Input
-          type="text"
-          name="fileName"
-          placeholder="Filename..."
-          value={fileName}
-          onChange={(e) => setFileName(e.target.value)}
-          mb={4}
-        />
+       
         <input {...getInputProps()} id="file" />
         <p>Drag 'n' drop file, or <span className="underline">Browse</span></p>
       </form>

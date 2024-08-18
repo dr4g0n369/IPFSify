@@ -13,17 +13,25 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate, useNavigation } from "react-router-dom";
+import { useAudio } from "../contexts/audioPlayer";
+
 
 function PlaylistCard({ coverUrl, title, likes }) {
   const navigate = useNavigate();
-  // console.log(title , " has ", likes , " likes!")
+  const { setActiveSong, setIsActive } = useAudio();
+  const handleOnClickSong = () => {
+    setActiveSong({ uri_name: `/src/assets/audioFiles/${title}.mp3`, title: title })
+    setIsActive(true);
+    // navigate(`/playlist/${title}`);
+  }
+
   return (
     <Card
       maxW="sm"
       bg="transparent"
       className="hover:bg-sky-700"
       cursor={"pointer"}
-      onClick={() => navigate(`/playist-${title}`)}
+      onClick={() => handleOnClickSong()}
     >
       <CardBody>
         <Image src={coverUrl} alt={title} borderRadius="sm" />
@@ -34,7 +42,7 @@ function PlaylistCard({ coverUrl, title, likes }) {
         </Stack>
       </CardBody>
     </Card>
-  );
+ );
 }
 
 export default PlaylistCard;
