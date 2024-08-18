@@ -15,7 +15,8 @@ import {
 import { useNavigate, useNavigation } from "react-router-dom";
 import { useAudio } from "../contexts/audioPlayer";
 
-function PlaylistCard({ classes, coverUrl, title }) {
+
+function PlaylistCard({ coverUrl, title, likes }) {
   const navigate = useNavigate();
   const { setActiveSong, setIsActive } = useAudio();
   const handleOnClickSong = () => {
@@ -23,6 +24,7 @@ function PlaylistCard({ classes, coverUrl, title }) {
     setIsActive(true);
     // navigate(`/playlist/${title}`);
   }
+
   return (
     <Card
       maxW="sm"
@@ -40,7 +42,7 @@ function PlaylistCard({ classes, coverUrl, title }) {
         </Stack>
       </CardBody>
     </Card>
-  );
+ );
 }
 
 export default PlaylistCard;

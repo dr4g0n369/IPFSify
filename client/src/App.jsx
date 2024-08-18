@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
+import { UserWeb3ContextProvider, useWeb3 } from "./contexts/web3context";
 
 import "./App.css";
 import { Alert, Box, Button, Image, Text } from "@chakra-ui/react";
@@ -19,6 +20,12 @@ import UploadSong from "./components/UploadSong";
 import AudioBar from "./components/MusicPlayer/AudioBar";
 
 function App() {
+  const { initializeProvider } = useWeb3();
+
+  useEffect(() => {
+    initializeProvider();
+  }, [initializeProvider]);
+
   const contentWrapperRef = useRef();
   return (
     <>

@@ -1,7 +1,7 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect, useRef } from "react";
 import Web3 from "web3";
+import abi from "../abi.json";
 
-// Create Web3 Context
 const web3Context = createContext({
   provider: null,
   contract: null,
@@ -14,6 +14,7 @@ export function UserWeb3ContextProvider({ children }) {
   const [provider, setProvider] = useState(null);
   const [contract, setContract] = useState(null);
   const [account, setAccount] = useState(null);
+  const contractInitialized = useRef(false); // Track contract initialization
 
   // Function to initialize provider (connect to MetaMask)
   const initializeProvider = async () => {
@@ -24,8 +25,7 @@ export function UserWeb3ContextProvider({ children }) {
         const accounts = await web3.eth.getAccounts();
         setProvider(web3);
         setAccount(accounts[0]); // Set the first account
-
-        console.log("Provider initialized", accounts[0]);
+        // console.log("Provider initialized with account:", accounts[0]);
       } catch (error) {
         console.error("Error connecting to wallet", error);
       }
@@ -36,18 +36,24 @@ export function UserWeb3ContextProvider({ children }) {
 
   // Function to initialize contract
   const initializeContract = async (abi, contractAddress) => {
-    if (provider) {
+    if (provider && !contractInitialized.current) {
       try {
         const contract = new provider.eth.Contract(abi, contractAddress);
         setContract(contract);
-        console.log("Contract initialized", contract);
+        contractInitialized.current = true; // Set flag to true after initializing
+        // console.log("Contract initialized at address:", contractAddress);
       } catch (error) {
         console.error("Error initializing contract", error);
       }
-    } else {
-      console.error("Provider is not initialized yet");
     }
   };
+
+  useEffect(() => {
+    if (provider) {
+      const contractAddress = '0xfa567dff7A2625B34052ac08D18bfe76C79DFeb5';
+      initializeContract(abi, contractAddress);
+    }
+  }, [provider]);
 
   return (
     <web3Context.Provider
@@ -64,7 +70,6 @@ export function UserWeb3ContextProvider({ children }) {
   );
 }
 
-// Custom Hook for using Web3 context
 export function useWeb3() {
   return useContext(web3Context);
 }
