@@ -6,14 +6,15 @@ const web3Context = createContext({
   provider: null,
   contract: null,
   account: null,
-  initializeProvider: () => {},
-  initializeContract: () => {},
+  initializeProvider: () => { },
+  initializeContract: () => { },
 });
 
 export function UserWeb3ContextProvider({ children }) {
   const [provider, setProvider] = useState(null);
   const [contract, setContract] = useState(null);
   const [account, setAccount] = useState(null);
+  const [fetched, setFetched] = useState(false);
   const contractInitialized = useRef(false); // Track contract initialization
 
   // Function to initialize provider (connect to MetaMask)
@@ -62,7 +63,7 @@ export function UserWeb3ContextProvider({ children }) {
         contract,
         account,
         initializeProvider,
-        initializeContract,
+        initializeContract, fetched, setFetched
       }}
     >
       {children}

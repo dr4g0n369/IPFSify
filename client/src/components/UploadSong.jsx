@@ -3,13 +3,14 @@ import { useDropzone } from "react-dropzone";
 import { Button, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useWeb3 } from "../contexts/web3context";
+import { useNavigate } from "react-router-dom";
 
 function UploadSong() {
 
   const { contract,account } = useWeb3();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const [fileName, setFileName] = useState("");
- 
+ const  navigate  = useNavigate();
   // console.log("Contract:", contract)
   const handleFileUpload = async() => {
     if (!fileName || acceptedFiles.length === 0) {
@@ -39,6 +40,7 @@ function UploadSong() {
         console.log("Contract method result:", result);
         console.log("Transaction hash:", result.transactionHash);
         console.log("Gas used:", result.gasUsed);
+        navigate("/");
       } catch (contractError) {
         console.error("Error interacting with contract:", contractError);
       }
